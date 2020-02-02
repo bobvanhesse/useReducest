@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsc -p .",
-    "prepare": "yarpm run build",
+    "prepare": "npm run build",
     "test": "true"
   },
   "repository": {
@@ -36,8 +36,5 @@
   },
   "peerDependencies": {
     "react": "^16.8.0"
-  },
-  "devDependencies": {
-    "yarpm": "0.2.1"
   }
 }
