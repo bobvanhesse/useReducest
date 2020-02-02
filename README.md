@@ -1,9 +1,9 @@
 # useReducest
 
-`useReducest` is a custom hook for React, that extends [React's `useReducer` hook](https://reactjs.org/docs/hooks-reference.html#usereducer) with a fourth parameter: middlewares.
-Without the fourth parameter, `useReducest` is functionally equivalent `React.useReducer`.
-Middlewares are expected to have the same interface as those in [Redux](https://redux.js.org/advanced/middleware/).
-`useReducest` lets you add existing Redux middlewares to existing `React.useReducer` hooks, without having to refactor anything.
+`useReducest` is a custom hook for React, that extends [React's `useReducer` hook](https://reactjs.org/docs/hooks-reference.html#usereducer) with a fourth (optional) parameter: middlewares.
+`useReducest` is compatible with any existing implementation of `React.useReducer`.
+Middlewares are expected to conform to the [Redux Middleware API](https://redux.js.org/advanced/middleware/).
+`useReducest` lets you add existing Redux middlewares to existing `React.useReducer` hooks, without having to refactor the useReducer implementation nor the middlewares.
 
 ## API
 
@@ -16,11 +16,13 @@ const [state, dispatch] = useReducest(
 );
 ```
 
-### `reducer`, `initialArg` and `init`
+### `reducer`, `initialArg`, `init` (_optional_)
 The first three parameters are equivalent to [React's `useReducer` hook](https://reactjs.org/docs/hooks-reference.html#usereducer).
+The `init` function is optional and you can pass value `undefined` in case you want to provide middlewares as a fourth parameter.
 
 ### `middlewares: Middleware[]` (_optional_)
-Middlewares expects an array of middlewares that will be applied left-to-right.
+`middlewares` expects an array of middlewares that will be applied left-to-right.
+This means the `next` function in a middleware will call the middleware to its right in the list in case there is one or the reducer.
 The interface of a middleware is:
 
 ```ts
@@ -33,12 +35,12 @@ type Middleware = (store: {
 ```
 
 ## Reference stability on re-rendering
-`useReducest` allows you to effectively change the `reducer` and `middlewares` after the state is initialised.
-As a result, the returned `dispatch` function will have a new reference in cas the `reducer` or `middlewares` parameter has changed.
-As `dispatch` functions are typically passed down to many child components, it is important to update the `reducer` and `middlewares` parameters only when necessary.
+`useReducest` allows you to change the `reducer` and `middlewares` after the state is initialised.
+As a result, the returned `dispatch` function will have a new reference in case the `reducer` or any of the `middlewares` has changed.
+As `dispatch` functions are typically passed down to many child components, it is important to update the `reducer` and `middlewares` only when necessary.
 
 ## Usage example
-Here's an extended version of React's Counter component example to clarify best-practices for performance:
+Here's an extended version of React's Counter component example to clarify best-practices:
 
 ```js
 const initialState = {count: 0};
