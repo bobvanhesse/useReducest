@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "React's useReducer hook extended with middleware",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
     "prepare": "npm run build",
