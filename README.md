@@ -108,6 +108,6 @@ function Counter() {
 ## Q&A
 
 ### What is the difference between `useReducest` and `react-use`'s `createReducer`?
-`useReducest` is heavily inspired by `react-use`'s `createReducer` custom hook.
+`useReducest` is heavily inspired by [`react-use`'s `createReducer`](https://github.com/streamich/react-use/blob/master/docs/createReducer.md) custom hook.
 The biggest difference between `useReducest` and `createReducer` is that when using `createReducer`, middlewares may not be changed after state initialisation.
 If all of your middlewares are stable, `createReducer` will give you the best performace and cleanest code.
